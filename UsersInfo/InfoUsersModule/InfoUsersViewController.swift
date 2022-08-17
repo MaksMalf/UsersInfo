@@ -1,15 +1,10 @@
-//
-//  InfoUsersViewController.swift
-//  UsersInfo
-//
-//  Created by Maksim Malofeev on 16/08/2022.
-//
-
 import UIKit
 
 class InfoUsersViewController: UIViewController {
 
     // MARK: - Properies
+
+    let images = Images()
 
     private lazy var avatarImage: UIImageView = {
         let image = UIImageView()
@@ -48,7 +43,7 @@ class InfoUsersViewController: UIViewController {
 
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            avatarImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            avatarImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 180),
             avatarImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             avatarImage.widthAnchor.constraint(equalToConstant: 200),
             avatarImage.heightAnchor.constraint(equalToConstant: 200),
@@ -68,7 +63,12 @@ extension InfoUsersViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = "Maksim"
+
+        var content = cell.defaultContentConfiguration()
+
+        content.image = UIImage(systemName: images.image[indexPath.row])
+
+        cell.contentConfiguration = content
         return cell
     }
 
