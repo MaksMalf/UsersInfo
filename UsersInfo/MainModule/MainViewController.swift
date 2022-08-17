@@ -2,6 +2,8 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    var users: [Users] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -32,6 +34,7 @@ class MainViewController: UIViewController {
         button.setTitle("Press", for: .normal)
         button.layer.cornerRadius = 8
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(tupButton), for: .touchUpInside)
         return button
     }()
 
@@ -69,16 +72,28 @@ class MainViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+
+    @objc private func tupButton() {
+        guard let name = textField.text else { return }
+        users.append(Users(name: name))
+        tableView.reloadData()
+    }
 }
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        switch users.count {
+        case 0: return 10
+        default: return users.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = "Maksim"
+        guard users.count != 0 else {
+            return cell
+        }
+        cell.textLabel?.text = users[indexPath.row].name
         cell.accessoryType = .disclosureIndicator
         return cell
     }

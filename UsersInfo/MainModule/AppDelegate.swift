@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  UsersInfo
-//
-//  Created by Maksim Malofeev on 14/08/2022.
-//
-
 import UIKit
 import CoreData
 
